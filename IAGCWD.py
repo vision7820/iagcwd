@@ -2,6 +2,7 @@ import cv2
 import glob
 import argparse
 import numpy as np
+import PIL.Image as Image
 from matplotlib import pyplot as plt
 from scipy.linalg import fractional_matrix_power
 
@@ -83,8 +84,18 @@ def main():
         else:
             img_output = img
 
-        cv2.imwrite(args.output_dir+name+'.jpg', img_output)
+        RGBimage = cv2.cvtColor(img_output, cv2.COLOR_BGR2RGB)
+        pil_image = Image.fromarray(RGBimage)
+        pil_image.save(args.output_dir+name+'.jpg', dpi=(300, 300))
+
+        img_final = cv2.imread(args.output_dir+name+'.jpg', 1)
+
+        gaussian_3 = cv2.GaussianBlur(img_final, (0, 0), 2.0)
+        unsharp_image = cv2.addWeighted(img_final, 2.0, gaussian_3, -1.0, 0)
+        cv2.imwrite(args.output_dir + name + '.jpg', unsharp_image)
+
 
 if __name__ == '__main__':
+
     main()
 

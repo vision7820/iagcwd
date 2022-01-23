@@ -12,7 +12,7 @@ This is an python implementation of the paper "Contrast enhancement of brightnes
 
 ## Running the tests
 ```
-python IAGCWD.py --input ./input --output ./output
+python IAGCWD.py --input ./input/ --output ./output/
 ```
 
 ## References
